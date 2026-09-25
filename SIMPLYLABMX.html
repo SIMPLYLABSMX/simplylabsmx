@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMPLY LAB MX Laboratorio Dental</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#050505',
+                        carbon: '#0D0D0D',
+                        panel: '#121212',
+                        card: '#181818',
+                        gold: {
+                            light: '#FFF0B3',
+                            DEFAULT: '#D4AF37',
+                            dark: '#8A6406',
+                            metallic: '#E5C158'
+                        },
+                        taupe: '#9E9689',
+                        champagne: '#F7F3E9'
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        helvetica: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for 3D Crown Viewer & Colorimeter -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #050505;
+            color: #F7F3E9;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6, .font-montserrat {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF0B3 0%, #D4AF37 50%, #8A6406 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #FFF0B3 0%, #D4AF37 50%, #8A6406 100%);
+        }
+        .gold-border {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .gold-glow:hover {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0D0D0D;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #332B10;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+    </style>
+</head>
+<body class="bg-void text-champagne antialiased selection:bg-gold selection:text-void">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-carbon/90 backdrop-blur-md border-b border-gold/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-3 group">
+                <div>
+                    <span class="text-xl font-extrabold tracking-wider font-montserrat gold-gradient-text">SIMPLY LAB</span>
+                    <span class="block text-[10px] tracking-[0.25em] text-taupe font-montserrat uppercase">LABORATORIO DENTAL</span>
+                </div>
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#mision" class="hover:text-gold transition-colors">Inicio</a>
+                <a href="#visor3d" class="hover:text-gold transition-colors">Colorímetro 3D</a>
+                <a href="#cotizador" class="hover:text-gold transition-colors">Cotizador FDI</a>
+                <a href="#catalogo" class="hover:text-gold transition-colors">Catálogo 2026</a>
+                <a href="#portal" class="hover:text-gold transition-colors">Portal STL</a>
+                <a href="#contacto" class="hover:text-gold transition-colors">Contacto</a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <a href="https://wa.me/527713021651?text=Hola%20Simply%20Lab%20MX,%20deseo%20iniciar%20una%20orden%20digital." target="_blank" class="hidden sm:inline-flex items-center space-x-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider gold-gradient-bg text-void hover:opacity-90 transition-opacity shadow-lg">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Mensaje Directo</span>
+                </a>
+                <button id="mobileMenuBtn" class="lg:hidden text-gold text-2xl p-2 focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-panel border-b border-gold/20 px-6 py-6 space-y-4">
+            <a href="#mision" class="block text-sm hover:text-gold transition-colors">Misión & Visión</a>
+            <a href="#visor3d" class="block text-sm hover:text-gold transition-colors">Colorímetro 3D</a>
+            <a href="#cotizador" class="block text-sm hover:text-gold transition-colors">Cotizador FDI</a>
+            <a href="#catalogo" class="block text-sm hover:text-gold transition-colors">Catálogo 2026</a>
+            <a href="#portal" class="block text-sm hover:text-gold transition-colors">Portal STL</a>
+            <a href="#contacto" class="block text-sm hover:text-gold transition-colors">Contacto</a>
+            <div class="pt-4 border-t border-gold/10">
+                <a href="https://wa.me/527713021651?text=Hola%20Simply%20Lab%20MX,%20deseo%20iniciar%20una%20orden." target="_blank" class="w-full py-3 rounded-xl gold-gradient-bg text-void font-bold text-center block uppercase tracking-wider text-xs">
+                    <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp 771 302 1651
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-28 pb-20 px-4 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-[300px] h-[300px] bg-amber-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                <div class="inline-flex items-center space-x-3 px-4 py-2 rounded-full bg-card gold-border backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+                    <span class="text-xs uppercase tracking-[0.3em] font-montserrat text-gold-light">Tecnología CAD/CAM 2026</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight font-montserrat uppercase leading-none">
+                    SMILING MADE <br>
+                    <span class="gold-gradient-text">SIMPLE.</span>
+                </h1>
+
+                <p class="text-lg sm:text-xl text-taupe max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
+                    Laboratorio dental de alta especialización digital. Fusionamos precisión milimétrica CAD/CAM, estética natural con cerámica avanzada y tiempos récord para clínicas odontológicas de vanguardia.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#cotizador" class="w-full sm:w-auto px-8 py-4 rounded-xl gold-gradient-bg text-void font-bold font-montserrat uppercase tracking-wider text-sm hover:opacity-90 transition-all shadow-xl text-center">
+                        <i class="fa-solid fa-calculator mr-2"></i> Cotizador Interactivo
+                    </a>
+                    <a href="#visor3d" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-card gold-border text-champagne font-bold font-montserrat uppercase tracking-wider text-sm hover:bg-panel transition-all text-center">
+                        <i class="fa-solid fa-cube mr-2 text-gold"></i> Explorar Visor 3D
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6 pt-8 border-t border-gold/20 max-w-lg mx-auto lg:mx-0">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-extrabold font-montserrat text-gold">100%</div>
+                        <div class="text-xs text-taupe uppercase tracking-wider mt-1">Digital CAD/CAM</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-extrabold font-montserrat text-gold">24h</div>
+                        <div class="text-xs text-taupe uppercase tracking-wider mt-1">Soporte y Entrega</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-extrabold font-montserrat text-gold">VITA</div>
+                        <div class="text-xs text-taupe uppercase tracking-wider mt-1">Calibración Real</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Interactive Preview Card -->
+            <div class="lg:col-span-5">
+                <div class="relative bg-card/80 backdrop-blur-xl p-6 sm:p-8 rounded-3xl gold-border shadow-2xl gold-glow">
+                    <div class="absolute -top-3 right-6 px-3 py-1 bg-gold text-void text-[10px] font-bold uppercase tracking-widest rounded-full">
+                        CAD/CAM Active
+                    </div>
+                    
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-void gold-border flex items-center justify-center text-gold text-xl">
+                            <i class="fa-solid fa-tooth"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-montserrat font-bold text-lg">Corona Anatómica Zirconia</h3>
+                            <p class="text-xs text-taupe">Geometría de Alta Precisión Optimizada</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-void/80 rounded-2xl p-4 mb-6 border border-gold/10">
+                        <div class="flex justify-between items-center text-sm mb-2">
+                            <span class="text-taupe">Margen cervical:</span>
+                            <span class="font-semibold text-gold">Chaflán 360°</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm mb-2">
+                            <span class="text-taupe">Espesor oclusal:</span>
+                            <span class="font-semibold">1.2 mm (Ideal)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-taupe">Ajuste marginal:</span>
+                            <span class="font-semibold text-green-400">15 µm (Perfecto)</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs text-taupe">
+                            <span>Estado del Sistema</span>
+                            <span class="text-gold font-bold">ONLINE & READY</span>
+                        </div>
+                        <a href="#portal" class="block w-full py-3 rounded-xl bg-void hover:bg-panel text-center text-xs font-bold uppercase tracking-wider gold-border text-gold transition-colors">
+                            <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Enviar Archivos STL
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Misión & Visión Section -->
+    <section id="mision" class="py-24 px-4 bg-carbon border-t border-b border-gold/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] font-montserrat text-gold">Filosofía de Excelencia</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold font-montserrat uppercase">MISIÓN & VISIÓN</h2>
+                <div class="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-panel p-8 sm:p-10 rounded-3xl gold-border relative group hover:border-gold transition-all duration-300">
+                    <div class="absolute top-6 right-6 text-gold/20 text-4xl font-black font-montserrat">01</div>
+                    <div class="w-14 h-14 rounded-2xl bg-void gold-border flex items-center justify-center text-gold text-2xl mb-6 shadow-inner">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold font-montserrat mb-4 text-gold-light">Nuestra Misión</h3>
+                    <p class="text-taupe leading-relaxed text-base sm:text-lg font-light">
+                        Proveer soluciones protésicas y restauradoras de máxima calidad estética y funcional para odontólogos que buscan la excelencia. Transformamos flujos de trabajo tradicionales en experiencias digitales CAD/CAM precisas, predecibles y puntuales.
+                    </p>
+                </div>
+
+                <div class="bg-panel p-8 sm:p-10 rounded-3xl gold-border relative group hover:border-gold transition-all duration-300">
+                    <div class="absolute top-6 right-6 text-gold/20 text-4xl font-black font-montserrat">02</div>
+                    <div class="w-14 h-14 rounded-2xl bg-void gold-border flex items-center justify-center text-gold text-2xl mb-6 shadow-inner">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold font-montserrat mb-4 text-gold-light">Nuestra Visión</h3>
+                    <p class="text-taupe leading-relaxed text-base sm:text-lg font-light">
+                        Ser el laboratorio dental CAD/CAM referente en México por nuestra innovación tecnológica constante, calibración de color milimétrica VITA y un servicio al cliente impecable que simplifica la práctica clínica diaria.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Visor & VITA Colorimeter Section -->
+    <section id="visor3d" class="py-24 px-4 bg-void relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] font-montserrat text-gold">Simulación Interactiva</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold font-montserrat uppercase">VISOR 3D & COLORÍMETRO VITA</h2>
+                <p class="text-taupe text-sm sm:text-base">Interactúa con el modelo 3D de corona dental con la geometría exacta de referencia y prueba los tonos de la guía VITA en tiempo real.</p>
+                <div class="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-8 bg-carbon rounded-3xl gold-border p-4 relative overflow-hidden shadow-2xl h-[480px] sm:h-[550px] flex flex-col items-center justify-center">
+                    <div id="canvas-container" class="w-full h-full rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing"></div>
+                    
+                    <div class="absolute bottom-6 left-6 right-6 flex flex-wrap items-center justify-between gap-4 bg-void/90 backdrop-blur-md px-6 py-3 rounded-2xl gold-border">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs text-taupe">Modo Visual:</span>
+                            <button onclick="setRenderMode('solid')" id="btnSolid" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gold text-void transition-colors">Sólido</button>
+                            <button onclick="setRenderMode('wireframe')" id="btnWire" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-card text-champagne hover:bg-panel transition-colors">Wireframe CAD</button>
+                            <button onclick="setRenderMode('xray')" id="btnXray" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-card text-champagne hover:bg-panel transition-colors">X-Ray</button>
+                        </div>
+                        <div class="text-xs font-mono text-gold" id="currentShadeLabel">Tono VITA: A2</div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-carbon p-6 rounded-3xl gold-border space-y-6">
+                        <h3 class="font-montserrat font-bold text-lg flex items-center space-x-2 text-gold-light">
+                            <i class="fa-solid fa-palette"></i>
+                            <span>Selector VITA Classic & 3D-Master</span>
+                        </h3>
+                        <p class="text-xs text-taupe leading-relaxed">Selecciona el tono exacto para calibrar la cerámica o zirconia monolítica antes de la fresadora CAD/CAM.</p>
+
+                        <div class="space-y-4">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-taupe block mb-2">Grupo A (Rojizo-Marrón)</span>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button onclick="changeCrownColor('#F4EBD9', 'A1')" class="py-2.5 rounded-xl bg-[#F4EBD9] text-void text-xs font-bold shadow hover:scale-105 transition-transform">A1</button>
+                                    <button onclick="changeCrownColor('#EEDDBF', 'A2')" class="py-2.5 rounded-xl bg-[#EEDDBF] text-void text-xs font-bold shadow hover:scale-105 transition-transform">A2</button>
+                                    <button onclick="changeCrownColor('#E5CE9F', 'A3')" class="py-2.5 rounded-xl bg-[#E5CE9F] text-void text-xs font-bold shadow hover:scale-105 transition-transform">A3</button>
+                                    <button onclick="changeCrownColor('#D9BE84', 'A3.5')" class="py-2.5 rounded-xl bg-[#D9BE84] text-void text-xs font-bold shadow hover:scale-105 transition-transform">A3.5</button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-wider text-taupe block mb-2">Grupo B & C (Amarillo / Grisáceo)</span>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button onclick="changeCrownColor('#F2ECD9', 'B1')" class="py-2.5 rounded-xl bg-[#F2ECD9] text-void text-xs font-bold shadow hover:scale-105 transition-transform">B1</button>
+                                    <button onclick="changeCrownColor('#EBDFA9', 'B2')" class="py-2.5 rounded-xl bg-[#EBDFA9] text-void text-xs font-bold shadow hover:scale-105 transition-transform">B2</button>
+                                    <button onclick="changeCrownColor('#D4CDBE', 'C2')" class="py-2.5 rounded-xl bg-[#D4CDBE] text-void text-xs font-bold shadow hover:scale-105 transition-transform">C2</button>
+                                    <button onclick="changeCrownColor('#FFFFFF', 'BL1 (Bleach)')" class="py-2.5 rounded-xl bg-[#FFFFFF] text-void text-xs font-bold shadow hover:scale-105 transition-transform">BL1</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-gold/20">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-taupe">Calibración Espectral:</span>
+                                <span class="text-green-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> Sincronizado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cotizador Interactivo con Odontograma FDI -->
+    <section id="cotizador" class="py-24 px-4 bg-carbon border-t border-b border-gold/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] font-montserrat text-gold">Presupuesto Inmediato</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold font-montserrat uppercase">COTIZADOR 2026</h2>
+                <p class="text-taupe text-sm sm:text-base">Selecciona primero un servicio del catálogo para activar la selección en el odontograma y personalizar tu orden.</p>
+                <div class="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Servicio Selector -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div class="bg-panel p-6 sm:p-8 rounded-3xl gold-border space-y-6">
+                        <h3 class="font-montserrat font-bold text-lg flex items-center space-x-2 text-gold-light">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>1. Seleccionar Servicio 2026</span>
+                        </h3>
+                        <p class="text-xs text-taupe">Elige un servicio para habilitar las piezas compatibles en el odontograma.</p>
+                        
+                        <div class="space-y-3 max-h-[500px] overflow-y-auto pr-1" id="servicesList">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <!-- Extras Option (MIYO Makeup) -->
+                        <div class="pt-4 border-t border-gold/20 space-y-3">
+                            <span class="text-xs font-bold uppercase tracking-wider text-gold">Adicionales Opcionales</span>
+                            <label class="flex items-center justify-between p-3 rounded-xl bg-card gold-border cursor-pointer hover:bg-void transition-colors">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="miyoCheckbox" onchange="updateQuotation()" class="w-4 h-4 accent-gold rounded">
+                                    <div>
+                                        <span class="text-sm font-semibold block">Maquillado con MIYO (Por diente)</span>
+                                        <span class="text-xs text-taupe">Caracterización estética avanzada con cerámicas MIYO</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-gold">$250 MXN</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Odontograma & Selector -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="bg-panel p-6 sm:p-8 rounded-3xl gold-border space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-montserrat font-bold text-lg flex items-center space-x-2 text-gold-light">
+                                <i class="fa-solid fa-teeth"></i>
+                                <span>2. Odontograma (Filtrado Anatómico)</span>
+                            </h3>
+                            <button onclick="clearSelectedTeeth()" class="text-xs text-taupe hover:text-gold transition-colors underline">Limpiar selección</button>
+                        </div>
+                        <div id="restrictionNotice" class="p-3 rounded-xl bg-gold/10 border border-gold/30 text-xs text-gold flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span id="restrictionText">Por favor selecciona primero un servicio del catálogo para comenzar.</span>
+                        </div>
+
+                        <!-- Maxilar Superior (18 to 28) -->
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-taupe block mb-2">Maxilar (Derecha 17-11 | Izquierda 21-27)</span>
+                            <div class="grid grid-cols-8 sm:grid-cols-14 gap-1.5" id="upperArch">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Mandíbula Inferior (48 to 38) -->
+                        <div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-taupe block mb-2">Mandíbula (Derecha 47-41 | Izquierda 31-37)</span>
+                            <div class="grid grid-cols-8 sm:grid-cols-14 gap-1.5" id="lowerArch">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-4 pt-2 text-xs text-taupe">
+                            <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-card gold-border inline-block"></span><span>Disponible</span></div>
+                            <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded gold-gradient-bg inline-block"></span><span>Seleccionado</span></div>
+                            <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-void border border-stone-800 opacity-40 inline-block"></span><span>No compatible / Inactivo</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Quotation Summary -->
+                    <div class="bg-panel p-6 sm:p-8 rounded-3xl gold-border space-y-6 shadow-2xl">
+                        <div class="flex items-center justify-between pb-4 border-b border-gold/20">
+                            <h3 class="font-montserrat font-bold text-xl gold-gradient-text">Resumen de Orden</h3>
+                            <span class="text-xs px-3 py-1 rounded-full bg-card gold-border text-gold font-mono">Tarifario 2026</span>
+                        </div>
+
+                        <div class="space-y-3 max-h-48 overflow-y-auto pr-2" id="quoteSummaryList">
+                            <div class="text-center py-6 text-taupe text-sm">
+                                <i class="fa-solid fa-calculator text-2xl mb-2 block text-gold/50"></i>
+                                Por favor selecciona primero un servicio del catálogo para comenzar.
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-gold/20 space-y-3">
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-taupe">Piezas Seleccionadas:</span>
+                                <span class="font-bold font-montserrat" id="selectedTeethCount">0 piezas</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-taupe">Subtotal:</span>
+                                <span class="font-bold font-montserrat" id="subtotalAmount">$0 MXN</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm" id="miyoRow" style="display: none;">
+                                <span class="text-taupe">Maquillado MIYO:</span>
+                                <span class="font-bold font-montserrat" id="miyoAmount">$0 MXN</span>
+                            </div>
+                            <div class="flex justify-between items-center text-lg pt-2 border-t border-gold/10">
+                                <span class="font-bold font-montserrat text-gold">Total Estimado:</span>
+                                <span class="text-2xl font-black font-montserrat gold-gradient-text" id="totalAmount">$0 MXN</span>
+                            </div>
+                        </div>
+
+                        <button onclick="sendWhatsAppQuote()" class="w-full py-4 rounded-xl gold-gradient-bg text-void font-bold font-montserrat uppercase tracking-wider text-sm hover:opacity-90 transition-all shadow-xl flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Enviar Cotización vía WhatsApp</span>
+                        </button>
+                        <p class="text-[11px] text-center text-taupe">Atención inmediata directo a producción: <strong class="text-gold">771 302 1651</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo Completo 2026 -->
+    <section id="catalogo" class="py-24 px-4 bg-void">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] font-montserrat text-gold">Tarifas Oficiales</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold font-montserrat uppercase">CATÁLOGO 2026</h2>
+                <p class="text-taupe text-sm sm:text-base">Precios oficiales en MXN de nuestros servicios de alta especialización CAD/CAM con calidad garantizada.</p>
+                <div class="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="catalogGrid">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Portal de Envío STL / DICOM -->
+    <section id="portal" class="py-24 px-4 bg-carbon border-t border-gold/20">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase tracking-[0.3em] font-montserrat text-gold">Transferencia Digital</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold font-montserrat uppercase">PORTAL DE ENVÍO STL / DICOM</h2>
+                <p class="text-taupe text-sm sm:text-base">Arrastra y suelta tus archivos de escaneo intraoral (.stl, .ply, .dcm, .zip) para procesar tu orden de inmediato con nuestro equipo técnico.</p>
+                <div class="w-24 h-1 gold-gradient-bg mx-auto rounded-full"></div>
+            </div>
+
+            <div class="bg-panel p-8 sm:p-12 rounded-3xl gold-border shadow-2xl space-y-8">
+                <div id="dropZone" class="border-2 border-dashed border-gold/40 hover:border-gold rounded-3xl p-10 text-center cursor-pointer bg-void/60 transition-all group">
+                    <input type="file" id="fileInput" multiple accept=".stl,.ply,.dcm,.zip,.rar" class="hidden">
+                    <div class="w-16 h-16 rounded-2xl bg-card gold-border mx-auto flex items-center justify-center text-gold text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-lg mb-2">Arrastra tus archivos aquí o haz clic para explorar</h3>
+                    <p class="text-xs text-taupe mb-4">Soporta archivos .STL, .PLY, .DCM, .ZIP hasta 500 MB</p>
+                    <span class="inline-block px-4 py-2 rounded-xl bg-card gold-border text-gold text-xs font-bold uppercase tracking-wider">Seleccionar Archivos</span>
+                </div>
+
+                <div id="fileListContainer" class="hidden space-y-4">
+                    <h4 class="font-montserrat font-bold text-sm text-gold">Archivos Listos para Envío:</h4>
+                    <div id="fileItemsList" class="space-y-2"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-gold/20">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-taupe mb-2">Nombre del Odontólogo / Clínica</label>
+                        <input type="text" id="clientName" placeholder="Dr. Juan Pérez / Clínica Sonrisa" class="w-full bg-void border border-gold/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold text-champagne">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-taupe mb-2">Teléfono de Contacto (WhatsApp)</label>
+                        <input type="tel" id="clientPhone" placeholder="771 000 0000" class="w-full bg-void border border-gold/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold text-champagne">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-taupe mb-2">Observaciones o Instrucciones Especiales</label>
+                        <textarea id="clientNotes" rows="3" placeholder="Color VITA A2, troquel separado, espaciador aliviado..." class="w-full bg-void border border-gold/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-gold text-champagne resize-none"></textarea>
+                    </div>
+                </div>
+
+                <button onclick="submitPortalOrder()" class="w-full py-4 rounded-xl gold-gradient-bg text-void font-bold font-montserrat uppercase tracking-wider text-sm hover:opacity-90 transition-all shadow-xl flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Enviar Archivos y Orden vía WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto" class="bg-void border-t border-gold/20 pt-20 pb-12 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16 border-b border-gold/10">
+            <div class="space-y-6">
+                <div class="flex items-center space-x-0">
+                    <div>
+                        <span class="text-xl font-extrabold tracking-wider font-montserrat gold-gradient-text">SIMPLY LAB</span>
+                        <span class="block text-[10px] tracking-[0.25em] text-taupe font-montserrat uppercase">LABORATORIO DENTAL</span>
+                    </div>
+                </div>
+                <p class="text-xs text-taupe leading-relaxed">
+                    PRECISION IS CARE. Laboratorio dental de alta especialización CAD/CAM con tecnología de punta y servicio directo para profesionales de la odontología.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://instagram.com/simplylabmx" target="_blank" class="w-10 h-10 rounded-xl bg-card gold-border flex items-center justify-center text-gold hover:bg-gold hover:text-void transition-colors">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/SIMPLYLABMX/" target="_blank" class="w-10 h-10 rounded-xl bg-card gold-border flex items-center justify-center text-gold hover:bg-gold hover:text-void transition-colors">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://wa.me/527713021651" target="_blank" class="w-10 h-10 rounded-xl bg-card gold-border flex items-center justify-center text-gold hover:bg-gold hover:text-void transition-colors">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-montserrat font-bold text-sm tracking-wider text-gold uppercase">Contacto Directo</h4>
+                <ul class="space-y-3 text-xs text-taupe">
+                    <li class="flex items-start space-x-3">
+                        <i class="fa-solid fa-location-dot text-gold mt-1"></i>
+                        <span>Valle de Santiago #166, Col. San Javier, Pachuca, Hgo.</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <i class="fa-solid fa-phone text-gold"></i>
+                        <span>+52 771 302 1651</span>
+                    </li>
+                    <li class="flex items-center space-x-3">
+                        <i class="fa-solid fa-envelope text-gold"></i>
+                        <span>simplylabmx@gmail.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-montserrat font-bold text-sm tracking-wider text-gold uppercase">Accesos Rápidos</h4>
+                <ul class="space-y-2 text-xs text-taupe">
+                    <li><a href="#mision" class="hover:text-gold transition-colors">Misión y Visión</a></li>
+                    <li><a href="#visor3d" class="hover:text-gold transition-colors">Colorímetro 3D VITA</a></li>
+                    <li><a href="#cotizador" class="hover:text-gold transition-colors">Cotizador FDI Interactivo</a></li>
+                    <li><a href="#catalogo" class="hover:text-gold transition-colors">Catálogo Oficial 2026</a></li>
+                    <li><a href="#portal" class="hover:text-gold transition-colors">Portal de Envío STL</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="font-montserrat font-bold text-sm tracking-wider text-gold uppercase">Horarios de Atención</h4>
+                <p class="text-xs text-taupe leading-relaxed">
+                    Lunes a Viernes: 10:00 AM – 7:00 PM<br>
+                    Sábados: 10:00 AM – 1:00 PM<br>
+                </p>
+                <div class="pt-2">
+                    <span class="inline-block px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold border border-green-500/30">
+                        <i class="fa-solid fa-circle text-[8px] mr-1 animate-pulse"></i> Laboratorio Operando
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-taupe">
+            <p>2026 SIMPLY LAB MX Laboratorio Dental. Todos los derechos reservados.</p>
+            <p class="mt-4 sm:mt-0 font-montserrat uppercase tracking-widest text-[10px] text-gold">SMILING MADE SIMPLE</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const catalogData = [
+            { id: 'zirc_ant', cat: '01. Zirconia', name: 'Corona Anterior en Zirconia', price: 1700, desc: 'Alta translucidez estética para sector anterior (Incisivos y Caninos).', type: 'anterior' },
+            { id: 'zirc_post_max', cat: '01. Zirconia', name: 'Corona Posterior en Zirconia (Maxilar Superior)', price: 1600, desc: 'Resistencia superior exclusivamente para el Maxilar Superior.', type: 'posterior_upper', archRestriction: 'upper' },
+            { id: 'zirc_post_mand', cat: '01. Zirconia', name: 'Corona Posterior en Zirconia (Mandíbula Inferior)', price: 1600, desc: 'Resistencia superior exclusivamente para la Mandíbula Inferior.', type: 'posterior_lower', archRestriction: 'lower' },
+            { id: 'zirc_inc', cat: '01. Zirconia', name: 'Incrustación en Zirconia', price: 1600, desc: 'Onlay / Inlay fresado con precisión CAD/CAM (Sector Posterior).', type: 'posterior_any' },
+            { id: 'zirc_mary', cat: '01. Zirconia', name: 'Puente Maryland en Zirconia', price: 4000, desc: 'Solución adhesiva conservadora de alta resistencia.', type: 'any' },
+            { id: 'emax_cor', cat: '02. E-Max CAD', name: 'Corona E-Max CAD', price: 1650, desc: 'Disilicato de litio con estética natural inigualable (Cualquier pieza).', type: 'any' },
+            { id: 'emax_inc', cat: '02. E-Max CAD', name: 'Incrustación E-Max CAD', price: 1650, desc: 'Incrustación estética disilicato (Sector Posterior).', type: 'posterior_any' },
+            { id: 'emax_ven', cat: '02. E-Max CAD', name: 'Carilla E-Max CAD', price: 1800, desc: 'Ultrafina para diseño de sonrisa (Sector Anterior).', type: 'anterior' },
+            { id: 'imp_cor', cat: '03. Implantes & MIYO', name: 'Corona sobre Implante', price: 1900, desc: 'Sobre titanio o base personalizada CAD/CAM.', type: 'any' },
+            { id: 'dig_mod', cat: '04. Digital', name: 'Modelo Impreso 3D', price: 350, desc: 'Resina de alta precisión con troquel removible.', type: 'any' },
+            { id: 'dig_res', cat: '04. Digital', name: 'Prueba en Resina Gris', price: 100, desc: 'Mockup estético y funcional para aprobación clínica.', type: 'any' },
+            { id: 'dig_wax', cat: '04. Digital', name: 'Encerado Diagnóstico (Por Diente)', price: 250, desc: 'Diseño estético computarizado y encerado.', type: 'any' },
+            { id: 'dig_full', cat: '04. Digital', name: 'Encerado Full-Mouth', price: 4000, desc: 'Rehabilitación oral completa digital.', type: 'any' },
+            { id: 'pmma_std', cat: '05. Provisionales PMMA', name: 'Provisional PMMA Estándar', price: 450, desc: 'Resina acrílica PMMA de alta durabilidad.', type: 'any' },
+            { id: 'pmma_mak', cat: '05. Provisionales PMMA', name: 'Provisional PMMA Maquillado', price: 750, desc: 'Caracterizado estético provisional.', type: 'any' }
+        ];
+
+        function renderCatalog() {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = catalogData.map(item => `
+                <div class="bg-carbon p-6 rounded-3xl gold-border flex flex-col justify-between hover:border-gold transition-all group">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] px-3 py-1 rounded-full bg-card gold-border text-gold font-mono">${item.cat}</span>
+                            <span class="text-xl font-extrabold font-montserrat text-gold-light">$${item.price.toLocaleString()} <span class="text-xs font-normal text-taupe">MXN</span></span>
+                        </div>
+                        <h3 class="font-montserrat font-bold text-lg mb-2 group-hover:text-gold transition-colors">${item.name}</h3>
+                        <p class="text-xs text-taupe leading-relaxed mb-6">${item.desc}</p>
+                    </div>
+                    <button onclick="selectServiceFromCatalog('${item.id}')" class="w-full py-3 rounded-xl bg-card hover:bg-panel gold-border text-xs font-bold uppercase tracking-wider text-champagne transition-colors">
+                        Seleccionar en Cotizador
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // NO INITIAL SERVICE OR TEETH SELECTED BY DEFAULT
+        let selectedServiceId = null;
+        const upperTeeth = [18, 17, 16, 15, 14, 13, 12, 11, 21, 22, 23, 24, 25, 26, 27];
+        const lowerTeeth = [48, 47, 46, 45, 44, 43, 42, 41, 31, 32, 33, 34, 35, 36, 37];
+        let selectedTeeth = new Set();
+
+        function isToothAnterior(toothNum) {
+            const pos = toothNum % 10;
+            return pos >= 1 && pos <= 3; // Incisivos y Caninos
+        }
+
+        function isToothPosterior(toothNum) {
+            const pos = toothNum % 10;
+            return pos >= 4 && pos <= 8; // Premolares y Molares
+        }
+
+        function isToothCompatible(toothNum, service) {
+            if (!service) return false;
+            const isUpper = (toothNum >= 11 && toothNum <= 28);
+            const isLower = (toothNum >= 31 && toothNum <= 48);
+            const anterior = isToothAnterior(toothNum);
+            const posterior = isToothPosterior(toothNum);
+
+            if (service.type === 'anterior') {
+                return anterior;
+            }
+            if (service.type === 'posterior_upper') {
+                return posterior && isUpper;
+            }
+            if (service.type === 'posterior_lower') {
+                return posterior && isLower;
+            }
+            if (service.type === 'posterior_any') {
+                return posterior;
+            }
+            return true; // 'any'
+        }
+
+        function renderServicesList() {
+            const list = document.getElementById('servicesList');
+            list.innerHTML = catalogData.map(item => `
+                <label class="flex items-center justify-between p-3 rounded-xl bg-card gold-border cursor-pointer hover:bg-void transition-colors ${selectedServiceId === item.id ? 'border-gold bg-void' : ''}">
+                    <div class="flex items-center space-x-3">
+                        <input type="radio" name="quotationService" value="${item.id}" ${selectedServiceId === item.id ? 'checked' : ''} onchange="setService('${item.id}')" class="accent-gold">
+                        <div>
+                            <span class="text-sm font-semibold block">${item.name}</span>
+                            <span class="text-[11px] text-taupe">${item.cat}</span>
+                        </div>
+                    </div>
+                    <span class="font-bold text-gold">$${item.price.toLocaleString()} MXN</span>
+                </label>
+            `).join('');
+        }
+
+        function setService(id) {
+            selectedServiceId = id;
+            
+            // Filter out teeth that are incompatible with the newly chosen service
+            const service = catalogData.find(s => s.id === id);
+            if (service) {
+                selectedTeeth.forEach(t => {
+                    if (!isToothCompatible(t, service)) {
+                        selectedTeeth.delete(t);
+                    }
+                });
+            }
+
+            renderServicesList();
+            renderOdontogram();
+        }
+
+        function selectServiceFromCatalog(id) {
+            setService(id);
+            document.getElementById('cotizador').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderOdontogram() {
+            const upperArch = document.getElementById('upperArch');
+            const lowerArch = document.getElementById('lowerArch');
+            const restrictionText = document.getElementById('restrictionText');
+            const service = selectedServiceId ? catalogData.find(s => s.id === selectedServiceId) : null;
+
+            if (!service) {
+                restrictionText.textContent = "Por favor selecciona primero un servicio del catálogo para comenzar.";
+            } else if (service.type === 'anterior') {
+                restrictionText.textContent = `Servicio activo: "${service.name}" ➔ Solo permite piezas ANTERIORES (Incisivos y Caninos 1-3).`;
+            } else if (service.type === 'posterior_upper') {
+                restrictionText.textContent = `Servicio activo: "${service.name}" ➔ Estrictamente MAXILAR SUPERIOR y POSTERIOR (Premolares/Molares 14-18, 24-28).`;
+            } else if (service.type === 'posterior_lower') {
+                restrictionText.textContent = `Servicio activo: "${service.name}" ➔ Estrictamente MANDÍBULA INFERIOR y POSTERIOR (Premolares/Molares 34-38, 44-48).`;
+            } else if (service.type === 'posterior_any') {
+                restrictionText.textContent = `Servicio activo: "${service.name}" ➔ Solo permite piezas POSTERIORES (Premolares y Molares 4-8).`;
+            } else {
+                restrictionText.textContent = `Servicio activo: "${service.name}" ➔ Compatible con cualquier pieza dental.`;
+            }
+
+            upperArch.innerHTML = upperTeeth.map(t => {
+                const compatible = service ? isToothCompatible(t, service) : false;
+                const isSelected = selectedTeeth.has(t);
+                
+                let btnClass = 'h-10 rounded-lg text-xs font-bold font-montserrat transition-all ';
+                if (!compatible) {
+                    btnClass += 'bg-void border border-stone-800 text-stone-600 opacity-40 cursor-not-allowed';
+                } else if (isSelected) {
+                    btnClass += 'gold-gradient-bg text-void shadow-lg scale-105';
+                } else {
+                    btnClass += 'bg-card gold-border text-champagne hover:bg-panel';
+                }
+
+                return `<button type="button" onclick="toggleTooth(${t})" id="tooth-${t}" class="${btnClass}" ${!compatible ? 'disabled' : ''}>${t}</button>`;
+            }).join('');
+
+            lowerArch.innerHTML = lowerTeeth.map(t => {
+                const compatible = service ? isToothCompatible(t, service) : false;
+                const isSelected = selectedTeeth.has(t);
+                
+                let btnClass = 'h-10 rounded-lg text-xs font-bold font-montserrat transition-all ';
+                if (!compatible) {
+                    btnClass += 'bg-void border border-stone-800 text-stone-600 opacity-40 cursor-not-allowed';
+                } else if (isSelected) {
+                    btnClass += 'gold-gradient-bg text-void shadow-lg scale-105';
+                } else {
+                    btnClass += 'bg-card gold-border text-champagne hover:bg-panel';
+                }
+
+                return `<button type="button" onclick="toggleTooth(${t})" id="tooth-${t}" class="${btnClass}" ${!compatible ? 'disabled' : ''}>${t}</button>`;
+            }).join('');
+
+            updateQuotation();
+        }
+
+        // DESELECTION ALLOWED: Removes tooth completely without minimum count restriction
+        function toggleTooth(toothNum) {
+            if (!selectedServiceId) {
+                alert('Por favor selecciona primero un servicio del catálogo.');
+                return;
+            }
+
+            const service = catalogData.find(s => s.id === selectedServiceId);
+            if (!isToothCompatible(toothNum, service)) {
+                return;
+            }
+
+            if (selectedTeeth.has(toothNum)) {
+                selectedTeeth.delete(toothNum);
+            } else {
+                selectedTeeth.add(toothNum);
+            }
+            renderOdontogram();
+        }
+
+        function clearSelectedTeeth() {
+            selectedTeeth.clear();
+            renderOdontogram();
+        }
+
+        function getToothArchInfo(toothNum) {
+            if (toothNum >= 11 && toothNum <= 28) {
+                return { archName: 'Maxilar Superior', archCode: 'upper' };
+            } else {
+                return { archName: 'Mandíbula Inferior', archCode: 'lower' };
+            }
+        }
+
+        function updateQuotation() {
+            const summaryList = document.getElementById('quoteSummaryList');
+            const selectedCountEl = document.getElementById('selectedTeethCount');
+            const subtotalEl = document.getElementById('subtotalAmount');
+            const miyoRow = document.getElementById('miyoRow');
+            const miyoAmountEl = document.getElementById('miyoAmount');
+            const totalEl = document.getElementById('totalAmount');
+            const miyoCheckbox = document.getElementById('miyoCheckbox');
+
+            selectedCountEl.textContent = `${selectedTeeth.size} piezas`;
+
+            if (!selectedServiceId) {
+                summaryList.innerHTML = `
+                    <div class="text-center py-6 text-taupe text-sm">
+                        <i class="fa-solid fa-calculator text-2xl mb-2 block text-gold/50"></i>
+                        Por favor selecciona primero un servicio del catálogo para comenzar.
+                    </div>
+                `;
+                subtotalEl.textContent = '$0 MXN';
+                miyoRow.style.display = 'none';
+                totalEl.textContent = '$0 MXN';
+                return;
+            }
+
+            if (selectedTeeth.size === 0) {
+                summaryList.innerHTML = `
+                    <div class="text-center py-6 text-taupe text-sm">
+                        <i class="fa-solid fa-tooth text-2xl mb-2 block text-gold/50"></i>
+                        Selecciona las piezas dentales deseadas en el odontograma.
+                    </div>
+                `;
+                subtotalEl.textContent = '$0 MXN';
+                miyoRow.style.display = 'none';
+                totalEl.textContent = '$0 MXN';
+                return;
+            }
+
+            const service = catalogData.find(s => s.id === selectedServiceId);
+            const teethArr = Array.from(selectedTeeth).sort((a,b) => a-b);
+            
+            let subtotal = service ? service.price * teethArr.length : 0;
+            
+            // ORDER SUMMARY ITEM WITH DEDICATED X REMOVE BUTTON
+            summaryList.innerHTML = teethArr.map(t => {
+                const info = getToothArchInfo(t);
+                return `
+                    <div class="flex justify-between items-center bg-void p-3 rounded-xl gold-border text-sm transition-colors group">
+                        <div>
+                            <span class="font-bold text-gold mr-2">Pieza #${t}</span>
+                            <span class="text-[11px] text-taupe block">${info.archName} • ${service ? service.name : ''}</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="font-bold">$${service ? service.price.toLocaleString() : 0} MXN</span>
+                            <button type="button" onclick="toggleTooth(${t})" class="text-taupe hover:text-red-400 p-1.5 rounded-lg hover:bg-red-500/10 transition-colors" title="Quitar pieza #${t}">
+                                <i class="fa-solid fa-xmark text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            subtotalEl.textContent = `$${subtotal.toLocaleString()} MXN`;
+
+            let miyoTotal = 0;
+            if (miyoCheckbox.checked) {
+                miyoTotal = 250 * teethArr.length;
+                miyoRow.style.display = 'flex';
+                miyoAmountEl.textContent = `$${miyoTotal.toLocaleString()} MXN`;
+            } else {
+                miyoRow.style.display = 'none';
+            }
+
+            let grandTotal = subtotal + miyoTotal;
+            totalEl.textContent = `$${grandTotal.toLocaleString()} MXN`;
+        }
+
+        document.getElementById('miyoCheckbox').addEventListener('change', updateQuotation);
+
+        function sendWhatsAppQuote() {
+            if (!selectedServiceId) {
+                alert('Por favor selecciona primero un servicio del catálogo.');
+                return;
+            }
+            if (selectedTeeth.size === 0) {
+                alert('Por favor selecciona al menos una pieza dental en el odontograma.');
+                return;
+            }
+
+            const service = catalogData.find(s => s.id === selectedServiceId);
+            const teethArr = Array.from(selectedTeeth).sort((a,b) => a-b);
+            let subtotal = service.price * selectedTeeth.size;
+            let miyoChecked = document.getElementById('miyoCheckbox').checked;
+            let miyoTotal = miyoChecked ? 250 * selectedTeeth.size : 0;
+            let total = subtotal + miyoTotal;
+
+            let msg = `Hola Simply Lab MX, deseo solicitar la siguiente cotización:\n\n`;
+            msg += `🦷 *Servicio:* ${service.name} ($${service.price} c/u)\n`;
+            msg += `📋 *Detalle de Piezas y Ubicación Anatómica:*\n`;
+            teethArr.forEach(t => {
+                const info = getToothArchInfo(t);
+                msg += `- Pieza #${t} (${info.archName})\n`;
+            });
+            msg += `\n`;
+            if (miyoChecked) {
+                msg += `✨ *Adicional:* Maquillado con MIYO ($250 c/u)\n`;
+            }
+            msg += `💰 *Total Estimado:* $${total.toLocaleString()} MXN\n\n`;
+            msg += `Quedo atento para coordinar la recepción de archivos y modelo. ¡Gracias!`;
+
+            window.open(`https://wa.me/527713021651?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        let uploadedFiles = [];
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-gold'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-gold'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-gold');
+            handleFiles(e.dataTransfer.files);
+        });
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            for (let file of files) {
+                uploadedFiles.push(file);
+            }
+            renderFileList();
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            renderFileList();
+        }
+
+        function renderFileList() {
+            const container = document.getElementById('fileListContainer');
+            const list = document.getElementById('fileItemsList');
+            if (uploadedFiles.length > 0) {
+                container.classList.remove('hidden');
+                list.innerHTML = uploadedFiles.map((f, i) => `
+                    <div class="flex items-center justify-between bg-void p-3 rounded-xl gold-border text-xs">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-file-zipper text-gold text-base"></i>
+                            <span class="font-semibold truncate">${f.name}</span>
+                            <span class="text-taupe">(${(f.size / (1024*1024)).toFixed(2)} MB)</span>
+                        </div>
+                        <button onclick="removeFile(${i})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `).join('');
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        function submitPortalOrder() {
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const notes = document.getElementById('clientNotes').value.trim();
+
+            if (!name || !phone) {
+                alert('Por favor ingresa tu nombre/clínica y teléfono de contacto.');
+                return;
+            }
+
+            let msg = `Hola Simply Lab MX, envío una nueva orden digital desde el Portal STL:\n\n`;
+            msg += `👤 *Clínica/Odontólogo:* ${name}\n`;
+            msg += `📞 *Teléfono:* ${phone}\n`;
+            msg += `📁 *Archivos adjuntos:* ${uploadedFiles.length} archivo(s)\n`;
+            uploadedFiles.forEach(f => { msg += `- ${f.name} (${(f.size / (1024*1024)).toFixed(2)} MB)\n`; });
+            if (notes) {
+                msg += `📝 *Observaciones:* ${notes}\n`;
+            }
+            msg += `\nQuedo a la espera de confirmación de recepción. ¡Gracias!`;
+
+            window.open(`https://wa.me/527713021651?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        let scene, camera, renderer, crownMesh;
+        let currentRenderMode = 'solid';
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+
+        function init3DViewer() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0D0D0D);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 0, 5.5);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const dirLight1 = new THREE.DirectionalLight(0xFFF0B3, 1.2);
+            dirLight1.position.set(5, 10, 7);
+            scene.add(dirLight1);
+
+            const dirLight2 = new THREE.DirectionalLight(0xD4AF37, 0.8);
+            dirLight2.position.set(-5, -5, -5);
+            scene.add(dirLight2);
+
+            createCrownGeometry('#EEDDBF');
+
+            container.addEventListener('mousedown', (e) => { isDragging = true; previousMousePosition = { x: e.clientX, y: e.clientY }; });
+            container.addEventListener('mousemove', (e) => {
+                if (!isDragging || !crownMesh) return;
+                const deltaX = e.clientX - previousMousePosition.x;
+                const deltaY = e.clientY - previousMousePosition.y;
+                crownMesh.rotation.y += deltaX * 0.01;
+                crownMesh.rotation.x += deltaY * 0.01;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            window.addEventListener('mouseup', () => { isDragging = false; });
+
+            container.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                }
+            });
+            container.addEventListener('touchmove', (e) => {
+                if (!isDragging || e.touches.length !== 1 || !crownMesh) return;
+                const deltaX = e.touches[0].clientX - previousMousePosition.x;
+                const deltaY = e.touches[0].clientY - previousMousePosition.y;
+                crownMesh.rotation.y += deltaX * 0.01;
+                crownMesh.rotation.x += deltaY * 0.01;
+                previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            });
+            container.addEventListener('touchend', () => { isDragging = false; });
+
+            window.addEventListener('resize', onWindowResize);
+            animate3D();
+        }
+
+        function createCrownGeometry(colorHex) {
+            if (crownMesh) scene.remove(crownMesh);
+
+            const bodyGeo = new THREE.CylinderGeometry(1.2, 0.8, 2.2, 32, 16);
+            
+            const pos = bodyGeo.attributes.position;
+            for (let i = 0; i < pos.count; i++) {
+                let y = pos.getY(i);
+                if (y > 0.5) {
+                    let angle = Math.atan2(pos.getZ(i), pos.getX(i));
+                    let scale = 1 + 0.15 * Math.cos(4 * angle);
+                    pos.setX(i, pos.getX(i) * scale);
+                    pos.setZ(i, pos.getZ(i) * scale);
+                } else if (y < -0.5) {
+                    pos.setX(i, pos.getX(i) * 0.9);
+                    pos.setZ(i, pos.getZ(i) * 0.9);
+                }
+            }
+            bodyGeo.computeVertexNormals();
+
+            let material;
+            if (currentRenderMode === 'wireframe') {
+                material = new THREE.MeshBasicMaterial({ color: 0xD4AF37, wireframe: true });
+            } else if (currentRenderMode === 'xray') {
+                material = new THREE.MeshPhysicalMaterial({
+                    color: new THREE.Color(colorHex),
+                    transparent: true,
+                    opacity: 0.45,
+                    roughness: 0.1,
+                    metalness: 0.1,
+                    transmission: 0.8
+                });
+            } else {
+                material = new THREE.MeshStandardMaterial({
+                    color: new THREE.Color(colorHex),
+                    roughness: 0.25,
+                    metalness: 0.05,
+                    flatShading: false
+                });
+            }
+
+            crownMesh = new THREE.Mesh(bodyGeo, material);
+            scene.add(crownMesh);
+        }
+
+        function changeCrownColor(colorHex, shadeName) {
+            document.getElementById('currentShadeLabel').textContent = `Tono VITA: ${shadeName}`;
+            if (crownMesh && currentRenderMode !== 'wireframe') {
+                crownMesh.material.color.set(colorHex);
+            }
+        }
+
+        function setRenderMode(mode) {
+            currentRenderMode = mode;
+            document.getElementById('btnSolid').className = mode === 'solid' ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-gold text-void transition-colors' : 'px-3 py-1.5 rounded-lg text-xs font-bold bg-card text-champagne hover:bg-panel transition-colors';
+            document.getElementById('btnWire').className = mode === 'wireframe' ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-gold text-void transition-colors' : 'px-3 py-1.5 rounded-lg text-xs font-bold bg-card text-champagne hover:bg-panel transition-colors';
+            document.getElementById('btnXray').className = mode === 'xray' ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-gold text-void transition-colors' : 'px-3 py-1.5 rounded-lg text-xs font-bold bg-card text-champagne hover:bg-panel transition-colors';
+            
+            createCrownGeometry('#EEDDBF');
+        }
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            if (crownMesh && !isDragging) {
+                crownMesh.rotation.y += 0.005;
+            }
+            if (renderer && scene && camera) {
+                renderer.render(scene, camera);
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            if (!container || !renderer || !camera) return;
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        // Initialize application state on window load
+        window.onload = function() {
+            renderServicesList();
+            renderCatalog();
+            renderOdontogram();
+            init3DViewer();
+        };
+    </script>
+</body>
+</html>
